@@ -1,6 +1,7 @@
 #! /usr/bin/python
 """ Docstring"""
 import sqlite3
+import math
 
 
 conn = sqlite3.connect('renewable.db')
@@ -16,17 +17,29 @@ class Location:
     self.longitude = longitude  
     self.latitude = latitude
     self.production = production
+  def distance_From_Port(self, port):
+      return math.sqrt((self.longitude - port.longitude)**2 +
+                       (self.latitude - port.latitude)**2) 
 
 ## Two tables; location and ports
-ports = c.execute('select long, lat from ports')
+def get_Ports(conn):
+  """Takes a database connection with a ports table
+      conn = a database connection
+      
+      returns a list of Port objects."""
+  portlist = []
+  ports = c.execute('select long, lat from ports')
+  for longitude, latitude in ports:
+    port = Port(longitude, latitude)
+    portlist.append(port)
+  return portlist
 
-portlist = []
-for long, lat in ports:
-  portlist.append(Port(long, lat))
 
-print portlist[1].longitude
+ports = get_Ports(conn)
+test_Location = Location(40.0, 50.0, 100000)
 
+for port in ports:
+  print test_Location.distance_From_Port(port)
 
-
-ports = c.execute('select long, lat, production from location')
+##ports = c.execute('select long, lat, production from location')
   

@@ -1,13 +1,18 @@
 #! /usr/bin/python
-""" Docstring"""
+"""This script is for the UCD MSc. in Business Analytics, specifically the
+   Analytics Research modules programming assignment. It opens a database
+   connection and reads the data out of it into relevant data structures. It
+   then checks the distance between all possible pairs of Plant and Port,
+   returning the results in order of proximity to help a company choose the
+   optimal set up geographically."""
 
-import sqlite3
-import math
-from enum import Enum
 from collections import namedtuple
+from enum import Enum
+import math
+import sqlite3
 
 class LocationType(Enum):
-  """The list of valid location types"""
+  """The Enum of valid location types"""
   Plant = 1
   Port = 2
 
@@ -18,7 +23,6 @@ class Location(object):
      Stores both geographic and production information related to a given site.
   
       Attributes:
-          id_no: an int representing the given locations id.
           longitude: a float representing the longitudinal coordinates of the
               location.
           latitude: a float representing the latitudinal coordinates of the

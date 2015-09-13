@@ -1,4 +1,9 @@
+# These file patterns are to be ignored by git so they do not get added to my
+# git repository.
+# ---------------------------------------------------------------------------- #
+# Temporary files ending in '~'
 *.*~
-.gitignore~
+# .pyc files which are automatically generated upon runnning the python files.
 *.pyc
+# Other temp files which have strange patterns. 
 .~*

@@ -1,5 +1,5 @@
 #! /usr/bin/python
-"""This script is for the UCD MSc. in Business Analytics, specifically the
+"""This script is for the UCD MSc. Business Analytics, specifically the
    Analytics Research modules programming assignment. It opens a database
    connection and reads the data out of it into relevant data structures. It
    then checks the distance between all possible pairs of Plant and Port,
@@ -9,6 +9,7 @@
 from collections import namedtuple
 from enum import Enum
 import math
+import pandas as pd
 import sqlite3
 
 class LocationType(Enum):
@@ -72,7 +73,7 @@ def get_data(database_name):
         Returns:
             A list of Location objects representing Plants."""
     plantlist = []
-    plants = cursor.execute('select long, lat, production from location')
+    plants = cursor.execute('SELECT long, lat, production FROM location;')
     for longitude, latitude, production in plants:
       plant = Location(longitude, latitude, LocationType.Plant, production)
       plantlist.append(plant)
@@ -85,7 +86,7 @@ def get_data(database_name):
         Returns:
           A list of Location objects representing Ports."""
     portlist = []
-    ports = cursor.execute('select long, lat from ports')
+    ports = cursor.execute('SELECT long, lat FROM ports;')
     for longitude, latitude in ports:
       port = Location(longitude, latitude, LocationType.Port)
       portlist.append(port)
@@ -122,10 +123,14 @@ def rank_pairs(plant_list, port_list):
 
 
 def main():
+  """Reads in our database, ranks the different pairs of locations and prints
+     out the ordered list and writes it to a csv file for sharing with business
+     stakeholders."""
   plants, ports = get_data('renewable.db')  
   ordered_list = rank_pairs(plants, ports)
-  print ordered_list
-
+  data_frame = pd.DataFrame(ordered_list, columns=DistanceTuple._fields)
+  print data_frame
+  data_frame.to_csv('output.csv', index=False)
 
 if __name__ == "__main__":
     main()

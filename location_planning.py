@@ -38,8 +38,12 @@ class Location(object):
     if type in LocationType:
       self.type = type
     else: raise AttributeError
-    self.unique_name = (
-      str(type) + ' Lon:' + str(longitude) + ' Lat:' + str(latitude))
+
+  def __str__(self):
+    string_name = (
+      str(self.type) + ' Lon:' + str(self.longitude) + ' Lat:' +
+      str(self.latitude)).replace('LocationType.','')
+    return string_name
     
   def distance_to(self, target_location):
     """Returns the euclidean distance from this location to another target
@@ -117,7 +121,7 @@ def rank_pairs(plant_list, port_list):
     for port in port_list:
       distance = plant.distance_to(port)
       distance_list.append(
-          DistanceTuple(plant.unique_name, port.unique_name, distance))
+          DistanceTuple(str(plant), str(port), distance))
   distance_list.sort(key=lambda x: x.Distance)
   return distance_list
 

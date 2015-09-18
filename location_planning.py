@@ -37,14 +37,20 @@ class Location(object):
     self.production = production
     if type in LocationType:
       self.type = type
-    else: raise AttributeError
+    else: raise ValueError
 
   def __str__(self):
     string_name = (
       str(self.type) + ' Lon:' + str(self.longitude) + ' Lat:' +
       str(self.latitude)).replace('LocationType.','')
     return string_name
-    
+
+  def __eq__(self, other):
+    """Tests Locations objects for equivalence"""
+    return (isinstance(other, Location) and self.longitude == other.longitude
+            and self.latitude == other.latitude and self.type == other.type and
+            self.production == other.production)
+
   def distance_to(self, target_location):
     """Returns the euclidean distance from this location to another target
        location
@@ -66,41 +72,41 @@ class Location(object):
 
 DistanceTuple = namedtuple('DistanceTuple', ['Plant', 'Port', 'Distance'])
 
+def _get_plants(cursor):
+  """Takes a database connection with a 'location' table in the database.
+        cursor: a database cursor
+     
+      Returns:
+          A list of Location objects representing Plants."""
+  plantlist = []
+  plants = cursor.execute('SELECT long, lat, production FROM location;')
+  for longitude, latitude, production in plants:
+    plant = Location(longitude, latitude, LocationType.Plant, production)
+    plantlist.append(plant)
+  return plantlist
+
+
+def _get_ports(cursor):
+  """Takes a database connection with a 'ports' table in the database.
+        cursor: a database cursor
+      
+       Returns:
+        A list of Location objects representing Ports."""
+  portlist = []
+  ports = cursor.execute('SELECT long, lat FROM ports;')
+  for longitude, latitude in ports:
+    port = Location(longitude, latitude, LocationType.Port)
+    portlist.append(port)
+  return portlist
+
 
 def get_data(database_name):
   """Gets our data and returns two lists of Location Objects. One list of Ports
-     and one of Plants"""   
-  def get_plants(cursor):
-    """Takes a database connection with a ports table
-          cursor: a database cursor
-        
-        Returns:
-            A list of Location objects representing Plants."""
-    plantlist = []
-    plants = cursor.execute('SELECT long, lat, production FROM location;')
-    for longitude, latitude, production in plants:
-      plant = Location(longitude, latitude, LocationType.Plant, production)
-      plantlist.append(plant)
-    return plantlist
-    
-  def get_ports(cursor):
-    """Takes a database connection with a ports table
-          cursor: a database cursor
-        
-        Returns:
-          A list of Location objects representing Ports."""
-    portlist = []
-    ports = cursor.execute('SELECT long, lat FROM ports;')
-    for longitude, latitude in ports:
-      port = Location(longitude, latitude, LocationType.Port)
-      portlist.append(port)
-    return portlist
-
-    
+     and one of Plants"""  
   conn = sqlite3.connect(database_name)
   cursor = conn.cursor()
-  plants = get_plants(cursor)
-  ports = get_ports(cursor)
+  plants = _get_plants(cursor)
+  ports = _get_ports(cursor)
   conn.close()
   return plants, ports
   

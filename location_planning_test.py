@@ -1,6 +1,6 @@
 #! /usr/bin/python
 """Unit tests associated with location_planning.py"""
-# TODO(max): Complete
+
 import unittest
 from mock import Mock
 import location_planning

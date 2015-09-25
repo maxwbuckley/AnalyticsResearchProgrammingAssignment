@@ -38,3 +38,29 @@ tests in 'location_planning_test.py' These tests allow us to make sure all the
 code is working as intended. This will also make it easier to extend or further
 develop this code without introducing new bugs.
 
+> Launching the scripts:
+```shell
+python location_planning.py
+                       Plant                     Port  Distance
+0   Plant Lon:52.34 Lat:6.48  Port Lon:52.27 Lat:6.39  0.114018
+1   Plant Lon:52.86 Lat:8.99   Port Lon:52.7 Lat:8.63  0.393954
+2   Plant Lon:53.22 Lat:6.68  Port Lon:53.33 Lat:6.25  0.443847
+3   Plant Lon:53.66 Lat:6.69  Port Lon:53.33 Lat:6.25  0.550000
+4    Plant Lon:53.18 Lat:6.8  Port Lon:53.33 Lat:6.25  0.570088
+5   Plant Lon:52.84 Lat:6.92  Port Lon:52.27 Lat:6.39  0.778332
+```
+
+```shell
+python location_planning_test.py
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+```
+
+
+Package Dependencies:
+sqlite3
+pandas
+enum
+unittest
+mock

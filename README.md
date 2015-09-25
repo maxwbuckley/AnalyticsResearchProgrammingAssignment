@@ -38,7 +38,9 @@ tests in 'location_planning_test.py' These tests allow us to make sure all the
 code is working as intended. This will also make it easier to extend or further
 develop this code without introducing new bugs.
 
-> Launching the scripts:
+# Launching the scripts:
+Launching location_planning.py is done as follows and should return something
+similar to this below.
 ```shell
 python location_planning.py
                        Plant                     Port  Distance
@@ -50,6 +52,9 @@ python location_planning.py
 5   Plant Lon:52.84 Lat:6.92  Port Lon:52.27 Lat:6.39  0.778332
 ```
 
+The tests location_planning_test.py can be run as follows and should return
+similar
+
 ```shell
 python location_planning_test.py
 ........
@@ -58,7 +63,7 @@ Ran 8 tests in 0.001s
 ```
 
 
-Package Dependencies:
+# Package Dependencies:
 sqlite3
 pandas
 enum

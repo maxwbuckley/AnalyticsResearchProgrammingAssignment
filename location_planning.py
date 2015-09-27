@@ -70,7 +70,8 @@ class Location(object):
                      (self.latitude - target_location.latitude)**2) 
 
 
-DistanceTuple = namedtuple('DistanceTuple', ['Plant', 'Port', 'Distance'])
+DistanceTuple = namedtuple('DistanceTuple', ['Plant', 'Port', 'Distance',
+                                             'Production'])
 
 def _get_plants(cursor):
   """Takes a database connection with a 'location' table in the database.
@@ -133,7 +134,9 @@ def get_data(database_name):
 def rank_pairs(plant_list, port_list):
   """Takes a list of potential plant locations and a list of port locations and
      returns a list of DistanceTuple's with the pair of locations order by
-     euclidean distance from the closest pair to the farthest away pair.
+     euclidean distance from the closest pair to the farthest away pair. The
+     potential production volumes are also included as the business need may
+     vary. 
      
      Args:
          plant_list: A list of Locations of type LocationType.Plant
@@ -146,7 +149,7 @@ def rank_pairs(plant_list, port_list):
     for port in port_list:
       distance = plant.distance_to(port)
       distance_list.append(
-          DistanceTuple(str(plant), str(port), distance))
+          DistanceTuple(str(plant), str(port), distance, plant.production))
   distance_list.sort(key=lambda x: x.Distance)
   return distance_list
 

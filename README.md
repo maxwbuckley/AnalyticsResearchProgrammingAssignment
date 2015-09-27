@@ -22,7 +22,7 @@ structures. Then use a brute force (try all combinations) algorithm, which will
 perform the necessary calculations and provide the output for our business
 stakeholders.
 
-My approach is well commented in the respective scripts themselves. But
+My approach is well commented throughut the respective scripts themselves. But
 effectively location_planning.py is a script which reads the databases into 
 'Location' objects with sensibly named parameters. These Location objects are of
 two types 'Port' and 'Plant' which are then stored in their own respective lists
@@ -33,8 +33,9 @@ force comparison of every 'Port' and every 'Plant'. It stores its output as a
 list of named tuples. These named tuples have a name field I constructed for the
 plant and port from their type and coordinates as they lacked a true unique
 identifier or key column. The value it stores as the distance is the euclidean
-distance in the same units as the coordinates themselves. This list is then
-sorted by ascending distance and converted to a pandas dataframe object.
+distance in the same units as the coordinates themselves. The named tuple also
+stores the potential production volume possible from that Plant This list is
+then sorted by ascending distance and converted to a pandas dataframe object.
 
 This dataframe  object is then printed to the terminal. However as I know
 most business stakeholders prefer using csv format. So I also write out to a csv
@@ -53,13 +54,16 @@ similar to this:
 
 ```shell
 python location_planning.py
-                       Plant                     Port  Distance
-0   Plant Lon:52.34 Lat:6.48  Port Lon:52.27 Lat:6.39  0.114018
-1   Plant Lon:52.86 Lat:8.99   Port Lon:52.7 Lat:8.63  0.393954
-2   Plant Lon:53.22 Lat:6.68  Port Lon:53.33 Lat:6.25  0.443847
-3   Plant Lon:53.66 Lat:6.69  Port Lon:53.33 Lat:6.25  0.550000
-4    Plant Lon:53.18 Lat:6.8  Port Lon:53.33 Lat:6.25  0.570088
-5   Plant Lon:52.84 Lat:6.92  Port Lon:52.27 Lat:6.39  0.778332
+                       Plant                     Port  Distance  Production
+0   Plant Lon:52.34 Lat:6.48  Port Lon:52.27 Lat:6.39  0.114018      298978
+1   Plant Lon:52.86 Lat:8.99   Port Lon:52.7 Lat:8.63  0.393954       89499
+2   Plant Lon:53.22 Lat:6.68  Port Lon:53.33 Lat:6.25  0.443847      200068
+3   Plant Lon:53.66 Lat:6.69  Port Lon:53.33 Lat:6.25  0.550000      210817
+4    Plant Lon:53.18 Lat:6.8  Port Lon:53.33 Lat:6.25  0.570088      163358
+5   Plant Lon:52.84 Lat:6.92  Port Lon:52.27 Lat:6.39  0.778332      159794
+6   Plant Lon:52.84 Lat:6.92  Port Lon:53.33 Lat:6.25  0.830060      159794
+7   Plant Lon:52.66 Lat:7.26  Port Lon:52.27 Lat:6.39  0.953415      259696
+8   Plant Lon:52.36 Lat:7.71   Port Lon:52.7 Lat:8.63  0.980816       60573
 ```
 
 The unit tests location_planning_test.py can be run as follows and should return
@@ -72,6 +76,15 @@ python location_planning_test.py
 Ran 8 tests in 0.001s
 ```
 
+## Conclusions
+In this problem we have limited information, so the business action is not
+certain. Depending on other factors like the cost of each location and the
+production volumes required we may need one or more sites to cover our required
+volumes. But deciding on the information we have alone here I would recommend
+investing in the Plant at 'Lon:52.34 Lat:6.48' and the Port at 'Lon:52.27 
+Lat:6.39'. This minimizes the euclidean distance to '0.114018' as mentioned
+above. While the potential production volume is the best of any Plant at 298978
+tons per year.
 
 ## Package Dependencies:
 sqlite3

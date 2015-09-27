@@ -62,10 +62,10 @@ class TestLocationPlanningFunctions(unittest.TestCase):
                  Location(15.0, 15.0, LocationType.Port)]
     expected_return_value = [
         DistanceTuple(Plant='Plant Lon:0.0 Lat:0.0', Port='Port Lon:5.0 Lat:5.0'
-        , Distance=sqrt(50)), DistanceTuple(Plant='Plant Lon:0.0 Lat:0.0',
-        Port='Port Lon:10.0 Lat:10.0', Distance=sqrt(200)), DistanceTuple(Plant=
-        'Plant Lon:0.0 Lat:0.0', Port='Port Lon:15.0 Lat:15.0', Distance=sqrt(
-        450))]
+        , Distance=sqrt(50), Production=1000), DistanceTuple(Plant=
+        'Plant Lon:0.0 Lat:0.0', Port='Port Lon:10.0 Lat:10.0', Distance=sqrt(
+        200), Production=1000), DistanceTuple(Plant='Plant Lon:0.0 Lat:0.0',
+        Port='Port Lon:15.0 Lat:15.0', Distance=sqrt(450), Production=1000)]
     returned_ranks = location_planning.rank_pairs(plant_list, port_list)
     self.assertEqual(expected_return_value, returned_ranks)
     # Make sure the returned values are in ascending order.

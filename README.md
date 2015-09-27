@@ -64,6 +64,7 @@ python location_planning.py
 6   Plant Lon:52.84 Lat:6.92  Port Lon:53.33 Lat:6.25  0.830060      159794
 7   Plant Lon:52.66 Lat:7.26  Port Lon:52.27 Lat:6.39  0.953415      259696
 8   Plant Lon:52.36 Lat:7.71   Port Lon:52.7 Lat:8.63  0.980816       60573
+...
 ```
 
 The unit tests location_planning_test.py can be run as follows and should return
@@ -83,8 +84,8 @@ production volumes required we may need one or more sites to cover our required
 volumes. But deciding on the information we have alone here I would recommend
 investing in the Plant at 'Lon:52.34 Lat:6.48' and the Port at 'Lon:52.27 
 Lat:6.39'. This minimizes the euclidean distance to '0.114018' as mentioned
-above. While the potential production volume is the best of any Plant at 298978
-tons per year.
+above. While the potential production volume is the best of any Plant at
+'298978' tons per year.
 
 ## Package Dependencies:
 sqlite3
